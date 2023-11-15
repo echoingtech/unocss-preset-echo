@@ -374,9 +374,9 @@ export const presetEcho = definePreset(() => {
     ],
     shortcuts: [
       {  
-        'border-primary': 'border-black c-op-30',
-        'border-secondary': 'border-black c-op-10',
-        'border-third': 'border-black c-op-5',
+        'border-primary': 'b-black c-op-30',
+        'border-secondary': 'b-black c-op-10',
+        'border-third': 'b-black c-op-5',
 
         'text-h1': 'text-24 fw-500 lh-30',
         'text-h2': 'text-20 fw-500 lh-26',
