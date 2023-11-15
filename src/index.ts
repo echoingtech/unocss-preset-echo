@@ -277,7 +277,7 @@ export const presetEcho = definePreset(() => {
     name: 'unocss-preset-echo',
     rules: [
       ...mp.rules ?? [],
-      ['fw-num', { 'fw-family': 'Roboto' }]
+      ['font-num', { 'fw-family': 'Roboto' }]
     ],
     theme: {
       ...mp.theme,
