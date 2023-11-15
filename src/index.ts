@@ -17,7 +17,7 @@ const colors = {
     600: 'rgba(255,255,255,0.40)',
     700: 'rgba(255,255,255,0.64)',
     800: 'rgba(255,255,255,0.88)',
-    900: 'rgb(255,255,255)',
+    900: '#fff',
     DEFAULT: '#fff'
   },
 
@@ -30,8 +30,8 @@ const colors = {
     600: 'rgba(0,0,0,0.40)',
     700: 'rgba(0,0,0,0.64)',
     800: 'rgba(0,0,0,0.88)',
-    900: 'rgb(0,0,0)',
-    DEFAULT: 'rbg(0,0,0)'
+    900: '#000',
+    DEFAULT: '#000'
   },
 
   gray: {
@@ -46,7 +46,7 @@ const colors = {
     900: '#2b263b',
   },
 
-  get purpleGray() {
+  get purplegray() {
     return this.gray
   },
 
@@ -74,7 +74,7 @@ const colors = {
     900: '#1b2866',
   },
 
-  zimaBlue: {
+  zimablue: {
     100: '#dff7f7',
     200: '#cbf7f7',
     300: '#9df2f4',
@@ -158,7 +158,7 @@ const colors = {
     900: '#54163b',  
   },
 
-  tenderShoots: {
+  tendershoots: {
     100: '#f7dfec',
     200: '#ffcfe5',
     300: '#ffaed5',
@@ -199,7 +199,32 @@ const colors = {
 
   get qd() {
     return this.purple
-  }
+  },
+
+  success: 'var(--un-c-success)',
+  warning: 'var(--un-c-warning)',
+  error: 'var(--un-c-error)',
+  'business-info': 'var(--un-c-business-info)',
+  'text-primary': 'var(--un-c-text-primary)',
+  'text-secondary': 'var(--un-c-text-2)',
+  'text-third': 'var(--un-c-text-3)',
+  'text-disable': 'var(--un-c-text-disable)',
+  'text-error': 'var(--un-c-text-error)',
+  'text-warning': 'var(--un-c-text-warning)',
+  primary: 'var(--un-c-primary)',
+  secondary: 'var(--un-c-secondary)',
+  third: 'var(--un-c-third)',
+  'bg-primary': 'var(--un-c-bg-primary)',
+  'bg-secondary': 'var(--un-c-bg-2)',
+  'bg-third': 'var(--un-c-bg-3)',
+  'bg-fourth': 'var(--un-c-bg-4)',
+  'bg-warning': 'var(--un-c-bg-warning)',
+  'bg-error': 'var(--un-c-bg-error)',
+  'mask-primary': 'var(--un-c-mask-primary)',
+  'mask-secondary': 'var(--un-c-mask-2)',
+  'mask-third': 'var(--un-c-mask-3)',
+  'mask-active': 'var(--un-c-mask-active)',
+  'mask-hover': 'var(--un-c-mask-hover)',
 } satisfies Theme['colors']
 
 // assign default color, and color shortcuts
@@ -214,14 +239,173 @@ Object.values(colors as Required<Theme>['colors']).forEach((color) => {
   }
 })
 
+const colorsForVar = [
+  'white',
+  'neutral',
+  'purplegray',
+  'grape',
+  'blue',
+  'zimablue',
+  'turquoise',
+  'yellow',
+  'orange',
+  'red',
+  'pink',
+  'tendershoots',
+  'purple',
+]
+
+function genCssVars(theme: Theme) {
+  const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  return colorsForVar.flatMap(item => {
+    if (Array.isArray(item)) {
+      return levels.map(level => {
+        return `--un-c-${item[1]}: ${((theme as any).colors?.[item[0]] )[level]};`
+      })
+    } else {
+      return levels.map(level => {
+        return `--un-c-${item}: ${((theme as any).colors?.[item] )[level]};`
+      })
+    }
+  }).join('\n')
+}
+
 export const presetEcho = definePreset(() => {
   const mp = presetMp()
   return {
     ...mp,
+    name: 'unocss-preset-echo',
+    rules: [
+      ...mp.rules ?? [],
+      ['fw-num', { 'fw-family': 'Roboto' }]
+    ],
     theme: {
       ...mp.theme,
       colors
-    }
+    },
+    preflights: [
+      ...mp.preflights ?? [],
+      {
+        getCSS: ({ theme }) => `
+          :root, page {
+            ${genCssVars(theme)}
+            --un-c-primary: ${((theme as any).colors?.purple )[500]};
+            --un-c-secondary: ${((theme as any).colors?.purple )[900]};
+            --un-c-warning: ${((theme as any).colors?.orange )[500]};
+            --un-c-error: ${((theme as any).colors?.red )[500]};
+            --un-c-success: ${((theme as any).colors?.green )[600]};
+            --un-c-business-info: ${((theme as any).colors?.blue )[600]};
+            --un-c-text-primary: ${((theme as any).colors?.neutral )[900]};
+            --un-c-text-2: ${((theme as any).colors?.neutral )[700]};
+            --un-c-text-3: ${((theme as any).colors?.neutral )[600]};
+            --un-c-text-disable: ${((theme as any).colors?.neutral )[400]};
+            --un-c-bg-primary: ${((theme as any).colors?.purple )[100]};
+            --un-c-bg-2: ${((theme as any).colors?.gray )[100]};
+            --un-c-bg-3: ${((theme as any).colors?.white )[900]};
+            --un-c-bg-4: ${((theme as any).colors?.gray )[200]};
+            --un-c-bg-warning: ${((theme as any).colors?.yellow )[100]};
+            --un-c-bg-error: ${((theme as any).colors?.red )[100]};
+            --un-c-mask-primary: ${((theme as any).colors?.neutral )[800]};
+            --un-c-mask-2: ${((theme as any).colors?.neutral )[700]};
+            --un-c-mask-3: ${((theme as any).colors?.neutral )[500]};
+            --un-c-mask-active: ${((theme as any).colors?.neutral )[200]};
+            --un-c-mask-hover: ${((theme as any).colors?.neutral )[100]};
+          }
+
+          .g-theme-qd {
+            --un-c-primary: ${((theme as any).colors?.purple )[500]};
+            --un-c-secondary: ${((theme as any).colors?.purple )[900]};
+            --un-c-third: ${((theme as any).colors?.orange )[500]};
+          }
+
+          .g-theme-pay {
+            --un-c-primary: #f96464;
+            --un-c-secondary: #379e45;
+            --un-c-third: #d94a4e;
+            --un-c-bg-primary: #ffebe9;
+            --un-c-bg-secondary: #e2f7e3;
+          }
+
+          .g-theme-dark {
+            --un-c-text-primary: #fff;
+            --un-c-text-2: rgba(255,255,255,0.88);
+            --un-c-text-3: rgba(255,255,255,0.64);
+            --un-c-text-disable: rgba(255,255,255,0.4);
+          }
+
+          .g-theme-qh {
+            --un-c-primary: #ff812c;
+            --un-c-secondary: #ff3355;
+            --un-c-text-warning: #f56300;
+            --un-c-text-error: #db1f0c;
+          }
+
+          .g-theme-vip {
+            --un-c-primary: #800c00;
+            --un-c-secondary: #f6dec8;
+            --un-c-text-primary: #800c00;
+            --un-c-text-2: rgba(128,12,0,0.64);
+            --un-c-text-3: #f1ba88;
+            --un-c-bg-2: #dfc579;
+          }
+
+          .g-theme-mihua-dark {
+            --un-c-primary: #aef056;
+            --un-c-secondary: #9d96ff;
+            --un-c-text-primary: ${((theme as any).colors?.white )[800]};
+            --un-c-text-2: ${((theme as any).colors?.white )[700]};
+            --un-c-text-3: ${((theme as any).colors?.white )[600]};
+            --un-c-text-disable: ${((theme as any).colors?.white )[400]};
+            --un-c-bg-primary: ${((theme as any).colors?.white )[900]};
+            --un-c-bg-2: ${((theme as any).colors?.white )[500]};
+            --un-c-bg-3: ${((theme as any).colors?.white )[300]};
+          }
+
+          .g-theme-mihua {
+            --un-c-primary: #aef056;
+            --un-c-secondary: #9d96ff;
+            --un-c-bg-primary: #e0deff;
+            --un-c-bg-2: #f7f7f9;
+            --un-c-bg-3: #fff;
+            --un-c-bg-4: rgba(16,16,16,0.4);
+          }
+        `
+      }
+    ],
+    shortcuts: [
+      {  
+        'border-primary': 'border-black c-op-30',
+        'border-secondary': 'border-black c-op-10',
+        'border-third': 'border-black c-op-5',
+
+        'text-h1': 'text-24 fw-500 lh-30',
+        'text-h2': 'text-20 fw-500 lh-26',
+        'text-h3': 'text-18 fw-500 lh-25',
+        'text-h4': 'text-16 fw-500 lh-24',
+        'text-h5': 'text-14 fw-500 lh-22',
+        'text-h6': 'text-12 fw-500 lh-18',
+        'text-h7': 'text-11 fw-500 lh-13',
+        'text-h8': 'text-10 fw-500 lh-11',
+
+        'text-b1': 'text-24 fw-400 lh-30',
+        'text-b2': 'text-20 fw-400 lh-26',
+        'text-b3': 'text-18 fw-400 lh-25',
+        'text-b4': 'text-16 fw-400 lh-24',
+        'text-b5': 'text-14 fw-400 lh-22',
+        'text-b6': 'text-12 fw-400 lh-18',
+        'text-b7': 'text-11 fw-400 lh-13',
+        'text-b8': 'text-10 fw-400 lh-11',
+
+        'text-n1': 'text-24 font-num lh-30',
+        'text-n2': 'text-20 font-num lh-26',
+        'text-n3': 'text-18 font-num lh-25',
+        'text-n4': 'text-16 font-num lh-24',
+        'text-n5': 'text-14 font-num lh-22',
+        'text-n6': 'text-12 font-num lh-18',
+        'text-n7': 'text-11 font-num lh-13',
+        'text-n8': 'text-10 font-num lh-11',
+      },
+    ]
   }
 })
 
