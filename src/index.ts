@@ -206,23 +206,26 @@ const colors = {
   error: 'var(--un-c-error)',
   'business-info': 'var(--un-c-business-info)',
   'text-primary': 'var(--un-c-text-primary)',
-  'text-secondary': 'var(--un-c-text-2)',
-  'text-third': 'var(--un-c-text-3)',
+  'text-2': 'var(--un-c-text-2)',
+  'text-3': 'var(--un-c-text-3)',
   'text-disable': 'var(--un-c-text-disable)',
   'text-error': 'var(--un-c-text-error)',
   'text-warning': 'var(--un-c-text-warning)',
   primary: 'var(--un-c-primary)',
-  secondary: 'var(--un-c-secondary)',
-  third: 'var(--un-c-third)',
+  secondary: 'var(--un-c-2)',
+  third: 'var(--un-c-3)',
+  'border-primary': 'var(--un-c-b-primary)',
+  'border-2': 'var(--un-c-b-2)',
+  'border-3': 'var(--un-c-b-3)',
   'bg-primary': 'var(--un-c-bg-primary)',
-  'bg-secondary': 'var(--un-c-bg-2)',
-  'bg-third': 'var(--un-c-bg-3)',
-  'bg-fourth': 'var(--un-c-bg-4)',
+  'bg-2': 'var(--un-c-bg-2)',
+  'bg-3': 'var(--un-c-bg-3)',
+  'bg-4': 'var(--un-c-bg-4)',
   'bg-warning': 'var(--un-c-bg-warning)',
   'bg-error': 'var(--un-c-bg-error)',
   'mask-primary': 'var(--un-c-mask-primary)',
-  'mask-secondary': 'var(--un-c-mask-2)',
-  'mask-third': 'var(--un-c-mask-3)',
+  'mask-2': 'var(--un-c-mask-2)',
+  'mask-3': 'var(--un-c-mask-3)',
   'mask-active': 'var(--un-c-mask-active)',
   'mask-hover': 'var(--un-c-mask-hover)',
 } satisfies Theme['colors']
@@ -277,7 +280,9 @@ export const presetEcho = definePreset(() => {
     name: 'unocss-preset-echo',
     rules: [
       ...mp.rules ?? [],
-      ['font-num', { 'fw-family': 'Roboto' }]
+      ['font-num', { 'font-family': 'Roboto' }],
+      ['shadow-primary', { 'box-shadow': '0 1px 20rpx 0 rgba(0, 0, 0, 0.08)' }],
+      ['shadow-2', { 'box-shadow': '0 1px 20rpx 0 rgba(0, 0, 0, 0.06)' }],
     ],
     theme: {
       ...mp.theme,
@@ -290,7 +295,7 @@ export const presetEcho = definePreset(() => {
           :root, page {
             ${genCssVars(theme)}
             --un-c-primary: ${((theme as any).colors?.purple )[500]};
-            --un-c-secondary: ${((theme as any).colors?.purple )[900]};
+            --un-c-2: ${((theme as any).colors?.purple )[900]};
             --un-c-warning: ${((theme as any).colors?.orange )[500]};
             --un-c-error: ${((theme as any).colors?.red )[500]};
             --un-c-success: ${((theme as any).colors?.green )[600]};
@@ -299,6 +304,9 @@ export const presetEcho = definePreset(() => {
             --un-c-text-2: ${((theme as any).colors?.neutral )[700]};
             --un-c-text-3: ${((theme as any).colors?.neutral )[600]};
             --un-c-text-disable: ${((theme as any).colors?.neutral )[400]};
+            --un-c-b-primary: rgba(0,0,0,0.3);
+            --un-c-b-2: rgba(0,0,0,0.1);
+            --un-c-b-3: rgba(0,0,0,0.05);
             --un-c-bg-primary: ${((theme as any).colors?.purple )[100]};
             --un-c-bg-2: ${((theme as any).colors?.gray )[100]};
             --un-c-bg-3: ${((theme as any).colors?.white )[900]};
@@ -314,14 +322,14 @@ export const presetEcho = definePreset(() => {
 
           .g-theme-qd {
             --un-c-primary: ${((theme as any).colors?.purple )[500]};
-            --un-c-secondary: ${((theme as any).colors?.purple )[900]};
-            --un-c-third: ${((theme as any).colors?.orange )[500]};
+            --un-c-2: ${((theme as any).colors?.purple )[900]};
+            --un-c-3: ${((theme as any).colors?.orange )[500]};
           }
 
           .g-theme-pay {
             --un-c-primary: #f96464;
-            --un-c-secondary: #379e45;
-            --un-c-third: #d94a4e;
+            --un-c-2: #379e45;
+            --un-c-3: #d94a4e;
             --un-c-bg-primary: #ffebe9;
             --un-c-bg-secondary: #e2f7e3;
           }
@@ -335,14 +343,14 @@ export const presetEcho = definePreset(() => {
 
           .g-theme-qh {
             --un-c-primary: #ff812c;
-            --un-c-secondary: #ff3355;
+            --un-c-2: #ff3355;
             --un-c-text-warning: #f56300;
             --un-c-text-error: #db1f0c;
           }
 
           .g-theme-vip {
             --un-c-primary: #800c00;
-            --un-c-secondary: #f6dec8;
+            --un-c-2: #f6dec8;
             --un-c-text-primary: #800c00;
             --un-c-text-2: rgba(128,12,0,0.64);
             --un-c-text-3: #f1ba88;
@@ -351,7 +359,7 @@ export const presetEcho = definePreset(() => {
 
           .g-theme-mihua-dark {
             --un-c-primary: #aef056;
-            --un-c-secondary: #9d96ff;
+            --un-c-2: #9d96ff;
             --un-c-text-primary: ${((theme as any).colors?.white )[800]};
             --un-c-text-2: ${((theme as any).colors?.white )[700]};
             --un-c-text-3: ${((theme as any).colors?.white )[600]};
@@ -363,7 +371,7 @@ export const presetEcho = definePreset(() => {
 
           .g-theme-mihua {
             --un-c-primary: #aef056;
-            --un-c-secondary: #9d96ff;
+            --un-c-2: #9d96ff;
             --un-c-bg-primary: #e0deff;
             --un-c-bg-2: #f7f7f9;
             --un-c-bg-3: #fff;
@@ -373,11 +381,7 @@ export const presetEcho = definePreset(() => {
       }
     ],
     shortcuts: [
-      {  
-        'border-primary': 'b-black c-op-30',
-        'border-secondary': 'b-black c-op-10',
-        'border-third': 'b-black c-op-5',
-
+      {
         'text-h1': 'text-24 fw-500 lh-30',
         'text-h2': 'text-20 fw-500 lh-26',
         'text-h3': 'text-18 fw-500 lh-25',
