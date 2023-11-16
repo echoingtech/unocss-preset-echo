@@ -18,8 +18,8 @@ dependencies:
     specifier: ^5.0.0
     version: 5.0.2
   unocss-preset-mp:
-    specifier: ^1.4.0
-    version: 1.4.0(typescript@5.0.2)
+    specifier: ^1.4.1
+    version: 1.4.1(typescript@5.0.2)
 
 devDependencies:
   '@types/node':
@@ -1246,8 +1246,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
-  /unocss-preset-mp@1.4.0(typescript@5.0.2):
-    resolution: {integrity: sha512-pM8lRGJ5schnDYD2fI3S1iOZghBYKTyGvQM0PvQExY/bCks7Pe22JmDn5Lz09nOrLutCEmTvCC6FHsN1Bx7eLg==}
+  /unocss-preset-mp@1.4.1(typescript@5.0.2):
+    resolution: {integrity: sha512-cuhh8Q2Axs08nVwmMDY7UMAavm4Rf5i0n4CVlHGxHY7VjaKJm69vi9zw3NQSR1L0tFz6aObnDXMisQsoQ0mu+g==}
     peerDependencies:
       typescript: ^5.0.0
     dependencies:
