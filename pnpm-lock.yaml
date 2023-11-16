@@ -18,8 +18,8 @@ dependencies:
     specifier: ^5.0.0
     version: 5.0.2
   unocss-preset-mp:
-    specifier: ^1.4.1
-    version: 1.4.1(typescript@5.0.2)
+    specifier: ^1.4.2
+    version: 1.4.2(typescript@5.0.2)
 
 devDependencies:
   '@types/node':
@@ -27,7 +27,7 @@ devDependencies:
     version: 20.9.0
   bun-types:
     specifier: latest
-    version: 1.0.11
+    version: 1.0.12
   std-env:
     specifier: ^3.5.0
     version: 3.5.0
@@ -658,8 +658,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /bun-types@1.0.11:
-    resolution: {integrity: sha512-XaDwjnBlkdTOtBEAcXhDnPSKFMlwFK/526z0iyairYIDhZJMzZM1QU4D7XRiEI2SpKQWexn0S/LN9Mwx5xSJNg==}
+  /bun-types@1.0.12:
+    resolution: {integrity: sha512-jGXEQ9pkp1kwdgYY6X6SPP5V4kxEGGZQaZMEKUVeJ7T1/XFyrAwL4AeaM4lSvjYqwsPXIDdKCFgw5M1KLoK4qw==}
     dev: true
 
   /caniuse-lite@1.0.30001562:
@@ -1246,8 +1246,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
-  /unocss-preset-mp@1.4.1(typescript@5.0.2):
-    resolution: {integrity: sha512-cuhh8Q2Axs08nVwmMDY7UMAavm4Rf5i0n4CVlHGxHY7VjaKJm69vi9zw3NQSR1L0tFz6aObnDXMisQsoQ0mu+g==}
+  /unocss-preset-mp@1.4.2(typescript@5.0.2):
+    resolution: {integrity: sha512-LUNW/kEDR+qbAeY2MHuLAZqij1fPkXRvYQXurCG4sG9GvYjQMtyUCjc2Adt2q4xBuIMLxCPaOTyz/FX68Amm/g==}
     peerDependencies:
       typescript: ^5.0.0
     dependencies:
