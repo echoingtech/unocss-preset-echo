@@ -47,10 +47,6 @@ const colors = {
     900: '#2b263b',
   },
 
-  get purplegray() {
-    return this.gray
-  },
-
   grape: {
     100: '#f1e6ff',
     200: '#ebd4ff',
@@ -184,8 +180,20 @@ const colors = {
     DEFAULT: '#7c66ff',
   },
 
+  get qdPurple() {
+    return this.purple
+  },
+
+  get purplegray() {
+    return this.gray
+  },
+
+  get qdPurplegray() {
+    return this.purplegray
+  },
+
   // qiandao merchant blue
-  qdm: {
+  qdmBlue: {
     100: '#e6f4ff',
     200: '#bae0ff',
     300: '#91caff',
@@ -198,8 +206,8 @@ const colors = {
     DEFAULT: '#1677ff'
   },
 
-  // qihuo
-  qh: {
+  // qihuo orange
+  qhOrange: {
     100: '#ffeadb',
     200: '#ffd7ba',
     300: '#ffbf8f',
@@ -212,8 +220,32 @@ const colors = {
     900: '#753104'
   },
 
-  get qd() {
-    return this.purple
+  // mihua purple
+  mhPurple: {
+    100: '#E0DEFF',
+    200: '#CFCCFF',
+    300: '#BFBAFF',
+    400: '#AEA8FF',
+    500: '#9D96FF',
+    DEFAULT: '#9D96FF',
+    600: '#6F68DC',
+    700: '#4A42BA',
+    800: '#2C2497',
+    900: '#150E75'
+  },
+
+  // mihua green
+  mhGreen: {
+    100: '#E9FCD0',
+    200: '#DAFAB1',
+    300: '#C9F590',
+    400: '#BCF274',
+    500: '#AEF056',
+    DEFAULT: '#AEF056',
+    600: '#91D13D',
+    700: '#74B027',
+    800: '#5B9114',
+    900: '#437008',
   },
 
   success: 'var(--un-c-success)',
@@ -293,8 +325,8 @@ function getBuiltInTheme(theme: Theme) {
     [
       'qd',
       {
-        '--un-c-primary': ((theme as any).colors?.purple)[500],
-        '--un-c-2': ((theme as any).colors?.purple)[900],
+        '--un-c-primary': ((theme as any).colors?.qdPurple)[500],
+        '--un-c-2': ((theme as any).colors?.qdPurple)[900],
         '--un-c-3': ((theme as any).colors?.orange)[500],
       },
     ],
