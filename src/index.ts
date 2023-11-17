@@ -1,5 +1,6 @@
 import { definePreset } from '@unocss/core'
 import presetMp from 'unocss-preset-mp'
+import { entriesToCss } from '@unocss/core'
 import type { Theme } from './types'
 
 const colors = {
@@ -287,112 +288,169 @@ function genCssVars(theme: Theme) {
   }).join('\n')
 }
 
-export const presetEcho = definePreset(() => {
+function getBuiltInTheme(theme: Theme) {
+  const builtInTheme = [
+    [
+      'qd',
+      {
+        '--un-c-primary': ((theme as any).colors?.purple)[500],
+        '--un-c-2': ((theme as any).colors?.purple)[900],
+        '--un-c-3': ((theme as any).colors?.orange)[500],
+      },
+    ],
+    [
+      'pay',
+      {
+        '--un-c-primary': '#f96464',
+        '--un-c-2': '#379e45',
+        '--un-c-3': '#d94a4e',
+        '--un-c-bg-primary': '#ffebe9',
+        '--un-c-bg-secondary': '#e2f7e3',
+      },
+    ],
+    [
+      'dark',
+      {
+        '--un-c-text-primary': '#fff',
+        '--un-c-text-2': 'rgba(255,255,255,0.88)',
+        '--un-c-text-3': 'rgba(255,255,255,0.64)',
+        '--un-c-text-disable': 'rgba(255,255,255,0.4)',
+      },
+    ],
+    [
+      'qh',
+      {
+        '--un-c-primary': '#ff812c',
+        '--un-c-2': '#ff3355',
+        '--un-c-text-warning': '#f56300',
+        '--un-c-text-error': '#db1f0c',
+      },
+    ],
+    [
+      'vip',
+      {
+        '--un-c-primary': '#800c00',
+        '--un-c-2': '#f6dec8',
+        '--un-c-text-primary': '#800c00',
+        '--un-c-text-2': 'rgba(128,12,0,0.64)',
+        '--un-c-text-3': '#f1ba88',
+        '--un-c-bg-2': '#dfc579',
+      },
+    ],
+    [
+      'mihua-dark',
+      {
+        '--un-c-primary': '#aef056',
+        '--un-c-2': '#9d96ff',
+        '--un-c-text-primary': ((theme as any).colors?.white)[800],
+        '--un-c-text-2': ((theme as any).colors?.white)[700],
+        '--un-c-text-3': ((theme as any).colors?.white)[600],
+        '--un-c-text-disable': ((theme as any).colors?.white)[400],
+        '--un-c-bg-primary': ((theme as any).colors?.white)[900],
+        '--un-c-bg-2': ((theme as any).colors?.white)[500],
+        '--un-c-bg-3': ((theme as any).colors?.white)[300],
+      },
+    ],
+    [
+      'mihua',
+      {
+        '--un-c-primary': '#aef056',
+        '--un-c-2': '#9d96ff',
+        '--un-c-bg-primary': '#e0deff',
+        '--un-c-bg-2': '#f7f7f9',
+        '--un-c-bg-3': '#fff',
+        '--un-c-bg-4': 'rgba(16,16,16,0.4)',
+      },
+    ],
+  ]
+  return builtInTheme as [string, Record<string, string>][]
+}
+
+type PresetEchoOptions = {
+  theme?: Record<string, Record<string, string | number>>
+}
+
+export const presetEcho = definePreset((options: PresetEchoOptions = {}) => {
   const mp = presetMp()
+  const themeSet = new Set(['qd', 'pay', 'dark', 'qh', 'vip', 'mihua-dark', 'mihua'])
+  Object.keys(options.theme ?? {}).forEach(key => {
+    themeSet.add(key)
+  })
+  const themeNames = [...themeSet.values()]
+  const themeRegex = new RegExp(`^g-theme-(${themeNames.join('|')})$`)
+
   return {
     ...mp,
     name: 'unocss-preset-echo',
     rules: [
-      ...mp.rules ?? [],
+      ...(mp.rules ?? []),
       ['font-num', { 'font-family': 'Roboto' }],
       ['shadow-primary', { 'box-shadow': '0 1px 20rpx 0 rgba(0, 0, 0, 0.08)' }],
       ['shadow-2', { 'box-shadow': '0 1px 20rpx 0 rgba(0, 0, 0, 0.06)' }],
+      [
+        themeRegex,
+        ([, brand], { theme }) => {
+          const builtInTheme = getBuiltInTheme(theme)
+          if (!builtInTheme) {
+            return
+          }
+          const brandTheme = builtInTheme.find((item) => item[0] === brand)
+          const extraBrandTheme = (options.theme ?? {})[brand]
+          if (!brandTheme && !extraBrandTheme) {
+            return
+          }
+          const mergedTheme: Record<string, string | number> = {}
+          if (brandTheme) {
+            Object.assign(mergedTheme, brandTheme?.[1] || {})
+          }
+          if (extraBrandTheme) {
+            Object.assign(mergedTheme, extraBrandTheme || {})
+          }
+          const css = entriesToCss(Object.entries(mergedTheme))
+          return `.g-theme-${brand} {${css}}`
+        },
+        {
+          autocomplete: `g-theme-(${themeNames.join('|')})`,
+        },
+      ],
     ],
     theme: {
       ...mp.theme,
-      colors
+      colors,
     },
     preflights: [
-      ...mp.preflights ?? [],
+      ...(mp.preflights ?? []),
       {
         getCSS: ({ theme }) => `
           :root, page {
             ${genCssVars(theme)}
-            --un-c-primary: ${((theme as any).colors?.purple )[500]};
-            --un-c-2: ${((theme as any).colors?.purple )[900]};
-            --un-c-warning: ${((theme as any).colors?.orange )[500]};
-            --un-c-error: ${((theme as any).colors?.red )[500]};
-            --un-c-success: ${((theme as any).colors?.green )[600]};
-            --un-c-business-info: ${((theme as any).colors?.blue )[600]};
-            --un-c-text-primary: ${((theme as any).colors?.neutral )[900]};
-            --un-c-text-2: ${((theme as any).colors?.neutral )[700]};
-            --un-c-text-3: ${((theme as any).colors?.neutral )[600]};
-            --un-c-text-disable: ${((theme as any).colors?.neutral )[400]};
+            --un-c-primary: ${((theme as any).colors?.purple)[500]};
+            --un-c-2: ${((theme as any).colors?.purple)[900]};
+            --un-c-warning: ${((theme as any).colors?.orange)[500]};
+            --un-c-error: ${((theme as any).colors?.red)[500]};
+            --un-c-success: ${((theme as any).colors?.green)[600]};
+            --un-c-business-info: ${((theme as any).colors?.blue)[600]};
+            --un-c-text-primary: ${((theme as any).colors?.neutral)[900]};
+            --un-c-text-2: ${((theme as any).colors?.neutral)[700]};
+            --un-c-text-3: ${((theme as any).colors?.neutral)[600]};
+            --un-c-text-disable: ${((theme as any).colors?.neutral)[400]};
             --un-c-b-primary: rgba(0,0,0,0.3);
             --un-c-b-2: rgba(0,0,0,0.1);
             --un-c-b-3: rgba(0,0,0,0.05);
-            --un-c-bg-primary: ${((theme as any).colors?.purple )[100]};
-            --un-c-bg-2: ${((theme as any).colors?.gray )[100]};
-            --un-c-bg-3: ${((theme as any).colors?.white )[900]};
-            --un-c-bg-4: ${((theme as any).colors?.gray )[200]};
-            --un-c-bg-warning: ${((theme as any).colors?.yellow )[100]};
-            --un-c-bg-error: ${((theme as any).colors?.red )[100]};
-            --un-c-mask-primary: ${((theme as any).colors?.neutral )[800]};
-            --un-c-mask-2: ${((theme as any).colors?.neutral )[700]};
-            --un-c-mask-3: ${((theme as any).colors?.neutral )[500]};
-            --un-c-mask-active: ${((theme as any).colors?.neutral )[200]};
-            --un-c-mask-hover: ${((theme as any).colors?.neutral )[100]};
+            --un-c-bg-primary: ${((theme as any).colors?.purple)[100]};
+            --un-c-bg-2: ${((theme as any).colors?.gray)[100]};
+            --un-c-bg-3: ${((theme as any).colors?.white)[900]};
+            --un-c-bg-4: ${((theme as any).colors?.gray)[200]};
+            --un-c-bg-warning: ${((theme as any).colors?.yellow)[100]};
+            --un-c-bg-error: ${((theme as any).colors?.red)[100]};
+            --un-c-mask-primary: ${((theme as any).colors?.neutral)[800]};
+            --un-c-mask-2: ${((theme as any).colors?.neutral)[700]};
+            --un-c-mask-3: ${((theme as any).colors?.neutral)[500]};
+            --un-c-mask-active: ${((theme as any).colors?.neutral)[200]};
+            --un-c-mask-hover: ${((theme as any).colors?.neutral)[100]};
           }
-
-          .g-theme-qd {
-            --un-c-primary: ${((theme as any).colors?.purple )[500]};
-            --un-c-2: ${((theme as any).colors?.purple )[900]};
-            --un-c-3: ${((theme as any).colors?.orange )[500]};
-          }
-
-          .g-theme-pay {
-            --un-c-primary: #f96464;
-            --un-c-2: #379e45;
-            --un-c-3: #d94a4e;
-            --un-c-bg-primary: #ffebe9;
-            --un-c-bg-secondary: #e2f7e3;
-          }
-
-          .g-theme-dark {
-            --un-c-text-primary: #fff;
-            --un-c-text-2: rgba(255,255,255,0.88);
-            --un-c-text-3: rgba(255,255,255,0.64);
-            --un-c-text-disable: rgba(255,255,255,0.4);
-          }
-
-          .g-theme-qh {
-            --un-c-primary: #ff812c;
-            --un-c-2: #ff3355;
-            --un-c-text-warning: #f56300;
-            --un-c-text-error: #db1f0c;
-          }
-
-          .g-theme-vip {
-            --un-c-primary: #800c00;
-            --un-c-2: #f6dec8;
-            --un-c-text-primary: #800c00;
-            --un-c-text-2: rgba(128,12,0,0.64);
-            --un-c-text-3: #f1ba88;
-            --un-c-bg-2: #dfc579;
-          }
-
-          .g-theme-mihua-dark {
-            --un-c-primary: #aef056;
-            --un-c-2: #9d96ff;
-            --un-c-text-primary: ${((theme as any).colors?.white )[800]};
-            --un-c-text-2: ${((theme as any).colors?.white )[700]};
-            --un-c-text-3: ${((theme as any).colors?.white )[600]};
-            --un-c-text-disable: ${((theme as any).colors?.white )[400]};
-            --un-c-bg-primary: ${((theme as any).colors?.white )[900]};
-            --un-c-bg-2: ${((theme as any).colors?.white )[500]};
-            --un-c-bg-3: ${((theme as any).colors?.white )[300]};
-          }
-
-          .g-theme-mihua {
-            --un-c-primary: #aef056;
-            --un-c-2: #9d96ff;
-            --un-c-bg-primary: #e0deff;
-            --un-c-bg-2: #f7f7f9;
-            --un-c-bg-3: #fff;
-            --un-c-bg-4: rgba(16,16,16,0.4);
-          }
-        `
-      }
+        `,
+      },
     ],
     shortcuts: [
       {
@@ -414,16 +472,16 @@ export const presetEcho = definePreset(() => {
         'text-b7': 'text-11 fw-400 lh-13',
         'text-b8': 'text-10 fw-400 lh-11',
 
-        'text-n1': 'text-24 font-num lh-30',
-        'text-n2': 'text-20 font-num lh-26',
-        'text-n3': 'text-18 font-num lh-25',
-        'text-n4': 'text-16 font-num lh-24',
-        'text-n5': 'text-14 font-num lh-22',
-        'text-n6': 'text-12 font-num lh-18',
-        'text-n7': 'text-11 font-num lh-13',
-        'text-n8': 'text-10 font-num lh-11',
+        'text-n1': 'text-24 font-num fw-500 lh-30',
+        'text-n2': 'text-20 font-num fw-500 lh-26',
+        'text-n3': 'text-18 font-num fw-500 lh-25',
+        'text-n4': 'text-16 font-num fw-500 lh-24',
+        'text-n5': 'text-14 font-num fw-500 lh-22',
+        'text-n6': 'text-12 font-num fw-500 lh-18',
+        'text-n7': 'text-11 font-num fw-500 lh-13',
+        'text-n8': 'text-10 font-num fw-500 lh-11',
       },
-    ]
+    ],
   }
 })
 

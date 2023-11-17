@@ -28,6 +28,9 @@ devDependencies:
   bun-types:
     specifier: latest
     version: 1.0.12
+  prettier:
+    specifier: 3.1.0
+    version: 3.1.0
   std-env:
     specifier: ^3.5.0
     version: 3.5.0
@@ -1094,6 +1097,12 @@ packages:
       jsonc-parser: 3.2.0
       mlly: 1.4.2
       pathe: 1.1.1
+    dev: true
+
+  /prettier@3.1.0:
+    resolution: {integrity: sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /pretty-bytes@6.1.1:
