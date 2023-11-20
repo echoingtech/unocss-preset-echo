@@ -248,33 +248,33 @@ const colors = {
     900: '#437008',
   },
 
-  success: 'var(--un-c-success)',
-  warning: 'var(--un-c-warning)',
-  error: 'var(--un-c-error)',
-  'business-info': 'var(--un-c-business-info)',
-  'text-primary': 'var(--un-c-text-primary)',
-  'text-2': 'var(--un-c-text-2)',
-  'text-3': 'var(--un-c-text-3)',
-  'text-disable': 'var(--un-c-text-disable)',
-  'text-error': 'var(--un-c-text-error)',
-  'text-warning': 'var(--un-c-text-warning)',
-  primary: 'var(--un-c-primary)',
-  secondary: 'var(--un-c-2)',
-  third: 'var(--un-c-3)',
-  'border-primary': 'var(--un-c-b-primary)',
-  'border-2': 'var(--un-c-b-2)',
-  'border-3': 'var(--un-c-b-3)',
-  'bg-primary': 'var(--un-c-bg-primary)',
-  'bg-2': 'var(--un-c-bg-2)',
-  'bg-3': 'var(--un-c-bg-3)',
-  'bg-4': 'var(--un-c-bg-4)',
-  'bg-warning': 'var(--un-c-bg-warning)',
-  'bg-error': 'var(--un-c-bg-error)',
-  'mask-primary': 'var(--un-c-mask-primary)',
-  'mask-2': 'var(--un-c-mask-2)',
-  'mask-3': 'var(--un-c-mask-3)',
-  'mask-active': 'var(--un-c-mask-active)',
-  'mask-hover': 'var(--un-c-mask-hover)',
+  success: 'var(--du-c-success)',
+  warning: 'var(--du-c-warning)',
+  error: 'var(--du-c-error)',
+  'business-info': 'var(--du-c-business-info)',
+  'text-primary': 'var(--du-c-text-primary)',
+  'text-2': 'var(--du-c-text-2)',
+  'text-3': 'var(--du-c-text-3)',
+  'text-disable': 'var(--du-c-text-disable)',
+  'text-error': 'var(--du-c-text-error)',
+  'text-warning': 'var(--du-c-text-warning)',
+  primary: 'var(--du-c-primary)',
+  secondary: 'var(--du-c-2)',
+  third: 'var(--du-c-3)',
+  'border-primary': 'var(--du-c-b-primary)',
+  'border-2': 'var(--du-c-b-2)',
+  'border-3': 'var(--du-c-b-3)',
+  'bg-primary': 'var(--du-c-bg-primary)',
+  'bg-2': 'var(--du-c-bg-2)',
+  'bg-3': 'var(--du-c-bg-3)',
+  'bg-4': 'var(--du-c-bg-4)',
+  'bg-warning': 'var(--du-c-bg-warning)',
+  'bg-error': 'var(--du-c-bg-error)',
+  'mask-primary': 'var(--du-c-mask-primary)',
+  'mask-2': 'var(--du-c-mask-2)',
+  'mask-3': 'var(--du-c-mask-3)',
+  'mask-active': 'var(--du-c-mask-active)',
+  'mask-hover': 'var(--du-c-mask-hover)',
 } satisfies Theme['colors']
 
 // assign default color, and color shortcuts
@@ -310,11 +310,11 @@ function genCssVars(theme: Theme) {
   return colorsForVar.flatMap(item => {
     if (Array.isArray(item)) {
       return levels.map(level => {
-        return `--un-c-${item[1]}: ${((theme as any).colors?.[item[0]] )[level]};`
+        return `--du-c-${item[1]}: ${((theme as any).colors?.[item[0]] )[level]};`
       })
     } else {
       return levels.map(level => {
-        return `--un-c-${item}: ${((theme as any).colors?.[item] )[level]};`
+        return `--du-c-${item}: ${((theme as any).colors?.[item] )[level]};`
       })
     }
   }).join('\n')
@@ -325,73 +325,81 @@ function getBuiltInTheme(theme: Theme) {
     [
       'qd',
       {
-        '--un-c-primary': ((theme as any).colors?.qdPurple)[500],
-        '--un-c-2': ((theme as any).colors?.qdPurple)[900],
-        '--un-c-3': ((theme as any).colors?.orange)[500],
+        '--du-c-primary': ((theme as any).colors?.qdPurple)[500],
+        '--du-c-2': ((theme as any).colors?.qdPurple)[900],
+        '--du-c-3': ((theme as any).colors?.orange)[500],
       },
+    ],
+    [
+      'qd-gray',
+      {
+        '--du-c-primary': ((theme as any).colors?.qdPurple)[500],
+        '--du-c-2': ((theme as any).colors?.qdPurple)[900],
+        '--du-c-3': ((theme as any).colors?.orange)[500],
+      }
     ],
     [
       'pay',
       {
-        '--un-c-primary': '#f96464',
-        '--un-c-2': '#379e45',
-        '--un-c-3': '#d94a4e',
-        '--un-c-bg-primary': '#ffebe9',
-        '--un-c-bg-secondary': '#e2f7e3',
+        '--du-c-primary': '#f96464',
+        '--du-c-2': '#379e45',
+        '--du-c-3': '#d94a4e',
+        '--du-c-bg-primary': '#ffebe9',
+        '--du-c-bg-secondary': '#e2f7e3',
       },
     ],
     [
       'dark',
       {
-        '--un-c-text-primary': '#fff',
-        '--un-c-text-2': 'rgba(255,255,255,0.88)',
-        '--un-c-text-3': 'rgba(255,255,255,0.64)',
-        '--un-c-text-disable': 'rgba(255,255,255,0.4)',
+        '--du-c-text-primary': '#fff',
+        '--du-c-text-2': 'rgba(255,255,255,0.88)',
+        '--du-c-text-3': 'rgba(255,255,255,0.64)',
+        '--du-c-text-disable': 'rgba(255,255,255,0.4)',
       },
     ],
     [
       'qh',
       {
-        '--un-c-primary': '#ff812c',
-        '--un-c-2': '#ff3355',
-        '--un-c-text-warning': '#f56300',
-        '--un-c-text-error': '#db1f0c',
+        '--du-c-primary': '#ff812c',
+        '--du-c-2': '#ff3355',
+        '--du-c-text-warning': '#f56300',
+        '--du-c-text-error': '#db1f0c',
       },
     ],
     [
       'vip',
       {
-        '--un-c-primary': '#800c00',
-        '--un-c-2': '#f6dec8',
-        '--un-c-text-primary': '#800c00',
-        '--un-c-text-2': 'rgba(128,12,0,0.64)',
-        '--un-c-text-3': '#f1ba88',
-        '--un-c-bg-2': '#dfc579',
+        '--du-c-primary': '#800c00',
+        '--du-c-2': '#f6dec8',
+        '--du-c-text-primary': '#800c00',
+        '--du-c-text-2': 'rgba(128,12,0,0.64)',
+        '--du-c-text-3': '#f1ba88',
+        '--du-c-bg-2': '#dfc579',
       },
     ],
     [
       'mihua-dark',
       {
-        '--un-c-primary': '#aef056',
-        '--un-c-2': '#9d96ff',
-        '--un-c-text-primary': ((theme as any).colors?.white)[800],
-        '--un-c-text-2': ((theme as any).colors?.white)[700],
-        '--un-c-text-3': ((theme as any).colors?.white)[600],
-        '--un-c-text-disable': ((theme as any).colors?.white)[400],
-        '--un-c-bg-primary': ((theme as any).colors?.white)[900],
-        '--un-c-bg-2': ((theme as any).colors?.white)[500],
-        '--un-c-bg-3': ((theme as any).colors?.white)[300],
+        '--du-c-primary': '#aef056',
+        '--du-c-2': '#9d96ff',
+        '--du-c-text-primary': ((theme as any).colors?.white)[800],
+        '--du-c-text-2': ((theme as any).colors?.white)[700],
+        '--du-c-text-3': ((theme as any).colors?.white)[600],
+        '--du-c-text-disable': ((theme as any).colors?.white)[400],
+        '--du-c-bg-primary': ((theme as any).colors?.white)[900],
+        '--du-c-bg-2': ((theme as any).colors?.white)[500],
+        '--du-c-bg-3': ((theme as any).colors?.white)[300],
       },
     ],
     [
       'mihua',
       {
-        '--un-c-primary': '#aef056',
-        '--un-c-2': '#9d96ff',
-        '--un-c-bg-primary': '#e0deff',
-        '--un-c-bg-2': '#f7f7f9',
-        '--un-c-bg-3': '#fff',
-        '--un-c-bg-4': 'rgba(16,16,16,0.4)',
+        '--du-c-primary': '#aef056',
+        '--du-c-2': '#9d96ff',
+        '--du-c-bg-primary': '#e0deff',
+        '--du-c-bg-2': '#f7f7f9',
+        '--du-c-bg-3': '#fff',
+        '--du-c-bg-4': 'rgba(16,16,16,0.4)',
       },
     ],
   ]
@@ -456,30 +464,30 @@ export const presetEcho = definePreset((options: PresetEchoOptions = {}) => {
         getCSS: ({ theme }) => `
           :root, page {
             ${genCssVars(theme)}
-            --un-c-primary: ${((theme as any).colors?.purple)[500]};
-            --un-c-2: ${((theme as any).colors?.purple)[900]};
-            --un-c-warning: ${((theme as any).colors?.orange)[500]};
-            --un-c-error: ${((theme as any).colors?.red)[500]};
-            --un-c-success: ${((theme as any).colors?.green)[600]};
-            --un-c-business-info: ${((theme as any).colors?.blue)[600]};
-            --un-c-text-primary: ${((theme as any).colors?.neutral)[900]};
-            --un-c-text-2: ${((theme as any).colors?.neutral)[700]};
-            --un-c-text-3: ${((theme as any).colors?.neutral)[600]};
-            --un-c-text-disable: ${((theme as any).colors?.neutral)[400]};
-            --un-c-b-primary: rgba(0,0,0,0.3);
-            --un-c-b-2: rgba(0,0,0,0.1);
-            --un-c-b-3: rgba(0,0,0,0.05);
-            --un-c-bg-primary: ${((theme as any).colors?.purple)[100]};
-            --un-c-bg-2: ${((theme as any).colors?.gray)[100]};
-            --un-c-bg-3: ${((theme as any).colors?.white)[900]};
-            --un-c-bg-4: ${((theme as any).colors?.gray)[200]};
-            --un-c-bg-warning: ${((theme as any).colors?.yellow)[100]};
-            --un-c-bg-error: ${((theme as any).colors?.red)[100]};
-            --un-c-mask-primary: ${((theme as any).colors?.neutral)[800]};
-            --un-c-mask-2: ${((theme as any).colors?.neutral)[700]};
-            --un-c-mask-3: ${((theme as any).colors?.neutral)[500]};
-            --un-c-mask-active: ${((theme as any).colors?.neutral)[200]};
-            --un-c-mask-hover: ${((theme as any).colors?.neutral)[100]};
+            --du-c-primary: ${((theme as any).colors?.purple)[500]};
+            --du-c-2: ${((theme as any).colors?.purple)[900]};
+            --du-c-warning: ${((theme as any).colors?.orange)[500]};
+            --du-c-error: ${((theme as any).colors?.red)[500]};
+            --du-c-success: ${((theme as any).colors?.green)[600]};
+            --du-c-business-info: ${((theme as any).colors?.blue)[600]};
+            --du-c-text-primary: ${((theme as any).colors?.neutral)[900]};
+            --du-c-text-2: ${((theme as any).colors?.neutral)[700]};
+            --du-c-text-3: ${((theme as any).colors?.neutral)[600]};
+            --du-c-text-disable: ${((theme as any).colors?.neutral)[400]};
+            --du-c-b-primary: rgba(0,0,0,0.3);
+            --du-c-b-2: rgba(0,0,0,0.1);
+            --du-c-b-3: rgba(0,0,0,0.05);
+            --du-c-bg-primary: ${((theme as any).colors?.purple)[100]};
+            --du-c-bg-2: ${((theme as any).colors?.gray)[100]};
+            --du-c-bg-3: ${((theme as any).colors?.white)[900]};
+            --du-c-bg-4: ${((theme as any).colors?.gray)[200]};
+            --du-c-bg-warning: ${((theme as any).colors?.yellow)[100]};
+            --du-c-bg-error: ${((theme as any).colors?.red)[100]};
+            --du-c-mask-primary: ${((theme as any).colors?.neutral)[800]};
+            --du-c-mask-2: ${((theme as any).colors?.neutral)[700]};
+            --du-c-mask-3: ${((theme as any).colors?.neutral)[500]};
+            --du-c-mask-active: ${((theme as any).colors?.neutral)[200]};
+            --du-c-mask-hover: ${((theme as any).colors?.neutral)[100]};
           }
         `,
       },
